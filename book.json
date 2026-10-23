@@ -1,0 +1,11 @@
+﻿{
+  "isbn": "K8S-001",
+  "title": "K8S Test",
+  "year": 2026,
+  "price": 9.99,
+  "page": 100,
+  "category": "IT",
+  "coverPhoto": "images/test.jpg",
+  "publisher": { "id": 99, "name": "TestPub" },
+  "author": { "identityNo": "99", "firstName": "Test", "lastName": "User" }
+}
