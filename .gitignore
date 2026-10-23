@@ -3,9 +3,12 @@
 .venv/
 venv/
 
+
 # Environment variables
 .env
 .env.*
+!.env.example
+
 
 # Python cache
 __pycache__/
@@ -23,4 +26,4 @@ __pycache__/
 
 # Kubernetes secrets
 k8s/01-mongo-secret.yaml
-k8s/05-app-configmap.yaml
+

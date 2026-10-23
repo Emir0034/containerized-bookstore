@@ -11,7 +11,22 @@ MONGO_URI = os.getenv("MONGO_URI", "mongodb://localhost:27017")
 DB_NAME = os.getenv("DB_NAME", "BOOKSTORE")
 COLLECTION = os.getenv("COLLECTION", "books")
 
-client = MongoClient(MONGO_URI)
+# Kubernetes supplies database credentials through a Secret. Local Docker setups
+# can keep using an unauthenticated MONGO_URI without these variables.
+MONGO_USERNAME = os.getenv("MONGO_USERNAME")
+MONGO_PASSWORD = os.getenv("MONGO_PASSWORD")
+if bool(MONGO_USERNAME) != bool(MONGO_PASSWORD):
+    raise RuntimeError("Set both MONGO_USERNAME and MONGO_PASSWORD or neither")
+
+if MONGO_USERNAME and MONGO_PASSWORD:
+    client = MongoClient(
+        MONGO_URI,
+        username=MONGO_USERNAME,
+        password=MONGO_PASSWORD,
+        authSource=os.getenv("MONGO_AUTH_SOURCE", "admin"),
+    )
+else:
+    client = MongoClient(MONGO_URI)
 db = client[DB_NAME]
 books = db[COLLECTION]
 
@@ -62,4 +77,4 @@ def delete_book(id):
     return {"deleted": res.deleted_count == 1}
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    app.run(host="0.0.0.0", port=5000, debug=os.getenv("FLASK_DEBUG", "0") == "1")

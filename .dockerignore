@@ -1,7 +1,11 @@
-.venv
-__pycache__
-*.pyc
 .env
-.git
+.env.*
+.venv/
+venv/
+__pycache__/
+*.pyc
+.git/
+.gitignore
+k8s/
 *.log
 startup_log*

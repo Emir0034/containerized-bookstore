@@ -22,3 +22,15 @@ spec:
           envFrom:
             - configMapRef:
                 name: bookstore-app-config
+                
+          env:
+            - name: MONGO_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: mongo-auth
+                  key: username
+            - name: MONGO_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mongo-auth
+                  key: password
